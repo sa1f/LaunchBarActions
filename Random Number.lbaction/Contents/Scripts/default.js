@@ -15,8 +15,8 @@ function runWithString(string) {
 							"params": {
 									"apiKey": "############INSERT RANDOM.ORG API KEY HERE##############",
 									"n": 1,
-									"min": Math.min.apply(null, parts),
-									"max": Math.max.apply(null, parts),
+									"min": 0,
+									"max": string,
 									"replacement": true
 							},
 							"id": 42
