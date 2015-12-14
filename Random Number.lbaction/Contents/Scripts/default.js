@@ -15,7 +15,7 @@ function runWithString(string) {
 							"params": {
 									"apiKey": "############INSERT RANDOM.ORG API KEY HERE##############",
 									"n": 1,
-									"min": 0,
+									"min": 1,
 									"max": string,
 									"replacement": true
 							},
@@ -27,10 +27,6 @@ function runWithString(string) {
 				var data = JSON.parse(result.data)
 				var randNumber = data.result.random.data[0];
 
-				LaunchBar.displayInLargeType({
-					title: "Your random number is",
-					string: randNumber
-				})
 
     }
 }
