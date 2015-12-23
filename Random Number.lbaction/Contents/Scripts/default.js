@@ -1,19 +1,30 @@
-// LaunchBar Action Script
-
 function runWithString(string) {
     if (string == undefined) {
-        // Inform the user that there was no argument
-        LaunchBar.alert("Hey I'll need two numbers separated by a space");
+			LaunchBar.alert("Hey I'll need two numbers separated by a space");
     }
+		else if (string.match(/^([a-z0-9]){8}-([a-z0-9]){4}-([a-z0-9]){4}-([a-z0-9]){4}-([a-z0-9]){12}$/g)) {
+			var apiKey = {
+				"key" : string
+			};
+			try {
+				File.writeJSON(apiKey, Action.supportPath + "/key.json");
+			} catch (exception) {
+				LaunchBar.alert('Error while writing JSON: ' + exception);
+			}
+		}
 		else {
 				var parts = string.split(" ");
+
+				if (File.isReadable(Action.supportPath + "/key.json")) {
+					var keyJSON = File.readJSON(Action.supportPath + "/key.json");
+				}
 
 				var result = HTTP.postJSON('https://api.random.org/json-rpc/1/invoke', {
 						body: {
 							"jsonrpc": "2.0",
 							"method": "generateIntegers",
 							"params": {
-									"apiKey": "############INSERT RANDOM.ORG API KEY HERE##############",
+									"apiKey": keyJSON.key,
 									"n": 1,
 									"min": 1,
 									"max": string,
@@ -28,5 +39,6 @@ function runWithString(string) {
 				var randNumber = data.result.random.data[0];
 
 
+				return [{title : String(randNumber), icon: 'iconTemplate.pdf'}];
     }
 }
