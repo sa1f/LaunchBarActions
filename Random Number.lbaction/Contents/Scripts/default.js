@@ -19,6 +19,11 @@ function runWithString(string) {
 					var keyJSON = File.readJSON(Action.supportPath + "/key.json");
 				}
 
+				if (parts.length != 2) {
+					parts[1] = parts[0];
+					parts[0] = 1;
+				}
+
 				var result = HTTP.postJSON('https://api.random.org/json-rpc/1/invoke', {
 						body: {
 							"jsonrpc": "2.0",
@@ -26,8 +31,8 @@ function runWithString(string) {
 							"params": {
 									"apiKey": keyJSON.key,
 									"n": 1,
-									"min": 1,
-									"max": string,
+									"min": parts[0],
+									"max": parts[1],
 									"replacement": true
 							},
 							"id": 42
